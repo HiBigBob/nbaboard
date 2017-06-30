@@ -6,8 +6,8 @@
 
 <script>
   export default {
-    name: 'nbaboard'
-  }
+    name: 'nbaboard',
+  };
 </script>
 
 <style>
