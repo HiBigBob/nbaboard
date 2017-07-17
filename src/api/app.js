@@ -35,11 +35,19 @@ const transformer = (result) => {
 
 const filterHeader = (item, index) => {
   const header = ['PLAYER_NAME', 'AGE', 'GP', 'W', 'L', 'W_PCT', 'MIN', 'FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A', 'FG3_PCT'];
+  const headerFixed = ['PLAYER_NAME'];
   if (header.indexOf(item) > -1) {
-    return {
+    let obj = {
       title: item,
       key: index,
+      width: 100,
     };
+
+    if (headerFixed.indexOf(item) > -1) {
+      obj = Object.assign({}, obj, {fixed: 'left', width: 150, sortable: true});
+    }
+
+    return obj;
   }
 };
 
