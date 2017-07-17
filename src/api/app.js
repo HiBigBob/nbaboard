@@ -26,16 +26,21 @@ app.get('/leaguedashplayerstats', (req, res) => {
 
 const transformer = (result) => {
   return {
-    headers: result.headers.map((item, index) => {
-      return {
-        title: item,
-        key: index,
-      };
-    }),
+    headers: result.headers.map((item, index) => filterHeader(item, index)).filter(i => i),
     values: result.rowSet.slice(0, 50).map((item) => {
       return Object.assign({}, item);
     }),
   };
+};
+
+const filterHeader = (item, index) => {
+  const header = ['PLAYER_NAME', 'AGE', 'GP', 'W', 'L', 'W_PCT', 'MIN', 'FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A', 'FG3_PCT'];
+  if (header.indexOf(item) > -1) {
+    return {
+      title: item,
+      key: index,
+    };
+  }
 };
 
 const reqwest = (url) => {
