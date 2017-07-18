@@ -1,5 +1,12 @@
 <template>
-  <Table size="small" :columns="players.headers" :data ="players.values"> </Table>
+  <div>
+    <Table size="small" :columns="players.headers" :data ="players.values"> </Table>
+    <div style="margin: 10px;overflow: hidden">
+        <div style="float: right;">
+            <Page :total="players.values.length" :current="currentPage" @on-change="changePage"></Page>
+        </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -10,10 +17,11 @@
 
   export default {
     computed: mapGetters({
-      players: 'allDashPlayer',
+      players: 'dashPlayer',
+      currentPage: 'currentPage',
     }),
     methods: mapActions([
-      'addToCart',
+      'changePage',
     ]),
     created() {
       this.$store.dispatch('getAllDashPlayer');
