@@ -1,0 +1,2 @@
+export const RECEIVE_DASH_PLAYER = 'RECEIVE_DASH_PLAYER';
+export const RECEIVE_DASH = 'RECEIVE_DASH';
