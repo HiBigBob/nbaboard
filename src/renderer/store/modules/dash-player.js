@@ -14,13 +14,12 @@ const state = {
 const getters = {
   allDashPlayer: state => state.all,
   dashPlayer: state => {
-    const begin = state.page - 1;
+    const begin = (state.page - 1) * 10;
     const end = begin + 10;
-    const tmp = {
+    return {
       headers: state.all.headers,
       values: state.all.values.slice(begin, end),
     };
-    return tmp;
   },
   dashPlayerLength: state => state.all.values.length,
   currentPage: state => state.page,
