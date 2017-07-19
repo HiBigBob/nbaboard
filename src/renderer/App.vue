@@ -4,7 +4,7 @@
             <i-col :span="spanLeft" class="layout-menu-left">
                 <Menu active-name="1" theme="dark" width="auto">
                     <div>
-                    	<img src="https://vignette3.wikia.nocookie.net/logopedia/images/d/dd/NBA.png" style="width:15px" alt="" />
+                    	<img src="https://vignette3.wikia.nocookie.net/logopedia/images/d/dd/NBA.png" style="width:15px; margin-left:18px; margin-top:6px" alt="" />
                     </div>
                     <Menu-item name="1">
                         <Icon type="arrow-right-b"></Icon>
