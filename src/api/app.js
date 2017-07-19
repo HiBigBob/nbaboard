@@ -27,7 +27,7 @@ app.get('/leaguedashplayerstats', (req, res) => {
 const transformer = (result) => {
   return {
     headers: result.headers.map((item, index) => filterHeader(item, index)).filter(i => i),
-    values: result.rowSet.slice(0, 50).map((item) => {
+    values: result.rowSet.map((item) => {
       return Object.assign({}, item);
     }),
   };

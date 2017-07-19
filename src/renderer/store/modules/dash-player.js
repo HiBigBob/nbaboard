@@ -7,17 +7,22 @@ const state = {
     headers: [],
     values: [],
   },
-  currentDashPlayer: {
-    headers: [],
-    values: [],
-  },
   page: 1,
 };
 
 // getters
 const getters = {
   allDashPlayer: state => state.all,
-  dashPlayer: state => state.currentDashPlayer,
+  dashPlayer: state => {
+    const begin = state.page - 1;
+    const end = begin + 10;
+    const tmp = {
+      headers: state.all.headers,
+      values: state.all.values.slice(begin, end),
+    };
+    return tmp;
+  },
+  dashPlayerLength: state => state.all.values.length,
   currentPage: state => state.page,
 };
 
@@ -34,7 +39,6 @@ const actions = {
 const mutations = {
   [types.RECEIVE_DASH_PLAYER](state, { players }) {
     state.all = players;
-    state.currentDashPlayer = players;
   },
 
   [types.CHANGE_PAGE_DASH_PLAYER](state, { currentPage }) {
