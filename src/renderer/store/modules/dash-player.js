@@ -17,11 +17,20 @@ const getters = {
   dashPlayer: state => {
     let values = state.all.values;
     if (state.sort !== null) {
-      console.log(state.sort);
       values = values.sort((a, b) => {
-        a = a[state.sort.key].replace(' ', '');
-        b = b[state.sort.key].replace(' ', '');
-        return a < b;
+        a = a[state.sort.key].split(' ')[0];
+        b = b[state.sort.key].split(' ')[0];
+        let order = 1;
+        if (state.sort.order === 'desc') {
+          order = -1;
+        }
+        if (a < b) {
+          return (-1 * order);
+        }
+        if (a > b) {
+          return (1 * order);
+        }
+        return 0;
       });
     }
     const begin = (state.page - 1) * 10;
