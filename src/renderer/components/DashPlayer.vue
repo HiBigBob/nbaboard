@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Table size="small" no-data-text="Loading" :columns="players.headers" :data ="players.values"> </Table>
+    <Table size="small" no-data-text="Loading" :columns="players.headers" :data ="players.values" @on-sort-change="sortOrder"> </Table>
     <div style="margin: 10px;overflow: hidden">
       <div style="float: right;">
         <Page :total="playersLength" :current="currentPage" @on-change="changePage"></Page>
@@ -20,9 +20,11 @@
       players: 'dashPlayer',
       playersLength: 'dashPlayerLength',
       currentPage: 'currentPage',
+      sort: 'sort',
     }),
     methods: mapActions([
       'changePage',
+      'sortOrder',
     ]),
     created() {
       this.$store.dispatch('getAllDashPlayer');

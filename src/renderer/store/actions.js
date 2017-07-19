@@ -6,4 +6,10 @@ export const changePage = ({ commit }, page) => {
   });
 };
 
+export const sortOrder = ({ commit }, sort) => {
+  commit(types.SORT_ORDER_DASH_PLAYER, {
+    sort,
+  });
+};
+
 export const test = () => {};
