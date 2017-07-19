@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Table size="small" :columns="players.headers" :data ="players.values"> </Table>
+    <Table size="small" height="300" :columns="players.headers" :data ="players.values"> </Table>
     <div style="margin: 10px;overflow: hidden">
         <div style="float: right;">
             <Page :total="players.values.length" :current="currentPage" @on-change="changePage"></Page>
