@@ -88,6 +88,7 @@
     }
     .layout-content-main{
         padding: 10px;
+        height: 528px;
     }
     .layout-copy{
         text-align: center;
