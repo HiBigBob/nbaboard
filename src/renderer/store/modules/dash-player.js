@@ -1,6 +1,22 @@
 import stats from '../../api/stats';
 import * as types from '../mutation-types';
 
+const sortByType = (a, b, order) => {
+  if (typeof a === 'number') {
+    return order > 0 ? a - b : b - a;
+  }
+
+  a = a.split(' ')[0];
+  b = b.split(' ')[0];
+  if (a < b) {
+    return (-1 * order);
+  }
+  if (a > b) {
+    return (1 * order);
+  }
+  return 0;
+};
+
 // initial state
 const state = {
   all: {
@@ -18,19 +34,8 @@ const getters = {
     let values = state.all.values;
     if (state.sort !== null) {
       values = values.sort((a, b) => {
-        a = a[state.sort.key].split(' ')[0];
-        b = b[state.sort.key].split(' ')[0];
-        let order = 1;
-        if (state.sort.order === 'desc') {
-          order = -1;
-        }
-        if (a < b) {
-          return (-1 * order);
-        }
-        if (a > b) {
-          return (1 * order);
-        }
-        return 0;
+        const order = state.sort.order === 'desc' ? -1 : 1;
+        return sortByType(a[state.sort.key], b[state.sort.key], order);
       });
     }
     const begin = (state.page - 1) * 10;
