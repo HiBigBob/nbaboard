@@ -18,8 +18,8 @@ const getters = {
     let values = state.all.values;
     if (state.sort !== null) {
       values = values.sort((a, b) => {
-        a = a[state.sort.key].toString().split(' ')[0];
-        b = b[state.sort.key].toString().split(' ')[0];
+        a = a[state.sort.key].split(' ')[0];
+        b = b[state.sort.key].split(' ')[0];
         let order = 1;
         if (state.sort.order === 'desc') {
           order = -1;
