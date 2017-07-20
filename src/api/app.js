@@ -41,10 +41,11 @@ const filterHeader = (item, index) => {
       title: item,
       key: index,
       width: 100,
+      sortable: 'custom',
     };
 
     if (headerFixed.indexOf(item) > -1) {
-      obj = Object.assign({}, obj, {fixed: 'left', width: 150, sortable: 'custom'});
+      obj = Object.assign({}, obj, { fixed: 'left', width: 150 });
     }
 
     return obj;
