@@ -40,7 +40,7 @@ const state = {
     values: [],
   },
   current: {
-    headers: [],
+    headers: [{ title: ' ' }],
     values: [],
   },
   page: 1,
