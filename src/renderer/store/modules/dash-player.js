@@ -18,7 +18,7 @@ const sortByType = (a, b, order) => {
 };
 
 const transformCurrent = (state) => {
-  let values = state.all.values;
+  let values = state.all.values.slice();
   if (state.sort !== null) {
     values = values.sort((a, b) => {
       const order = state.sort.order === 'desc' ? -1 : 1;
