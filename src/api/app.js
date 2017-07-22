@@ -40,7 +40,7 @@ const filterHeader = (item, index) => {
     let obj = {
       title: item,
       key: index,
-      width: 100,
+      width: 80,
       sortable: 'custom',
     };
 
