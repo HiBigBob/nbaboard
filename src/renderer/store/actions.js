@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import * as types from './mutation-types';
 
 export const changePage = ({ commit }, page) => {
@@ -14,12 +15,11 @@ export const sortOrder = ({ commit }, sort) => {
 
 export const login = ({ commit }, creds) => {
   commit(types.LOGIN);
-  return new Promise(resolve => {
-    setTimeout(() => {
-      localStorage.setItem('token', 'JWT');
-      commit(types.LOGIN_SUCCESS);
-      resolve();
-    }, 1000);
+  return Vue.http.post('http://localhost:8000/login', creds).then((response) => {
+    localStorage.setItem('token', response.data.token);
+    commit(types.LOGIN_SUCCESS);
+  }).catch(() => {
+    commit(types.LOGIN_FAIL);
   });
 };
 

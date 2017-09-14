@@ -23,6 +23,9 @@ export default new Vuex.Store({
       state.isLoggedIn = true;
       state.pending = false;
     },
+    [types.LOGIN_FAIL](state) {
+      state.isLoggedIn = false;
+    },
     [types.LOGOUT](state) {
       state.isLoggedIn = false;
     }

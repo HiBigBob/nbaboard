@@ -5,7 +5,7 @@
     <p>
   <Form ref="formInline" :model="formInline" :rules="ruleInline" >
     <FormItem prop="user">
-      <Input type="text" v-model="formInline.user" placeholder="Username">
+      <Input type="text" v-model="formInline.username" placeholder="Username">
         <Icon type="ios-person-outline" slot="prepend"></Icon>
       </Input>
     </FormItem>
@@ -27,11 +27,11 @@
     data() {
       return {
         formInline: {
-          user: '',
+          username: '',
           password: ''
         },
         ruleInline: {
-          user: [
+          username: [
             { required: true, message: 'the username is required', trigger: 'blur' }
           ],
           password: [
@@ -46,10 +46,16 @@
         this.$refs[name].validate((valid) => {
           if (valid) {
             this.$store.dispatch('login', {
-              email: this.formInline.user,
+              username: this.formInline.username,
               password: this.formInline.password
             }).then(() => {
-              this.$router.push('/');
+              if (this.$store.getters.isLoggedIn) {
+                this.$router.push('/');
+              } else {
+                this.$refs[name].resetFields();
+                this.$refs[name].validate();
+                this.$Message.error('Login fails');
+              }
             });
           }
         });
