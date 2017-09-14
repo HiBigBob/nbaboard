@@ -45,8 +45,12 @@
       handleSubmit(name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
-            console.log(this.formInline.user);
-            console.log(this.formInline.password);
+            this.$store.dispatch('login', {
+              email: this.formInline.user,
+              password: this.formInline.password
+            }).then(() => {
+              this.$router.push('/');
+            });
           }
         });
       }

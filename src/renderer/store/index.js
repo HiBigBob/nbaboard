@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import * as actions from './actions';
 import * as getters from './getters';
 import dashPlayer from './modules/dash-player';
+import * as types from './mutation-types';
 
 Vue.use(Vuex);
 
@@ -14,6 +15,18 @@ export default new Vuex.Store({
   },
   actions,
   getters,
+  mutations: {
+    [types.LOGIN](state) {
+      state.pending = true;
+    },
+    [types.LOGIN_SUCCESS](state) {
+      state.isLoggedIn = true;
+      state.pending = false;
+    },
+    [types.LOGOUT](state) {
+      state.isLoggedIn = false;
+    }
+  },
   modules: {
     dashPlayer,
   },

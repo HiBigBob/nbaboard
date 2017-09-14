@@ -23,8 +23,6 @@ const router = new Router({
         }
       ],
       beforeEnter: (to, from, next) => {
-        console.log('Entering App');
-        console.log('is ', store.getters.isLoggedIn);
         if (!store.getters.isLoggedIn) {
           next('/login');
         }
@@ -36,14 +34,6 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: require('@/components/Login'),
-      beforeEnter: (to, from, next) => {
-        console.log('Entering login');
-        if (store.getters.isLoggedIn) {
-          next('/');
-        }
-
-        next();
-      }
     },
     {
       path: '*',

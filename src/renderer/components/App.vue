@@ -28,7 +28,7 @@
                     </Menu-item>
                     <Menu-item name="3" v-if="isLoggedIn">
                         <Icon type="arrow-right-b"></Icon>
-                        <span class="layout-text">Logout</span>
+                        <span class="layout-text" v-on:click="logout">Logout</span>
                     </Menu-item>
                 </Menu>
             </i-col>
@@ -70,11 +70,15 @@
         return this.spanLeft === 5 ? 13 : 24;
       },
       isLoggedIn() {
-        console.log('store isLoggedIn ', this.$store.getters.isLoggedIn);
         return this.$store.getters.isLoggedIn;
       }
     },
     methods: {
+      logout() {
+        this.$store.dispatch('logout').then(() => {
+          this.$router.push('/login');
+        });
+      },
       toggleClick() {
         if (this.spanLeft === 5) {
           this.spanLeft = 2;
