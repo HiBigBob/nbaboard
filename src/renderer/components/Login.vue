@@ -4,7 +4,7 @@
     <p slot="title">Connexion</p>
     <p>
   <Form ref="formInline" :model="formInline" :rules="ruleInline" >
-    <FormItem prop="user">
+    <FormItem prop="username">
       <Input type="text" v-model="formInline.username" placeholder="Username">
         <Icon type="ios-person-outline" slot="prepend"></Icon>
       </Input>
@@ -32,11 +32,11 @@
         },
         ruleInline: {
           username: [
-            { required: true, message: 'the username is required', trigger: 'blur' }
+            { required: true, message: 'The username is required', trigger: 'blur' }
           ],
           password: [
-            { required: true, message: 'the password is required', trigger: 'blur' },
-            { type: 'string', min: 6, message: 'With 6 character', trigger: 'blur' }
+            { required: true, message: 'The password is invalid', trigger: 'blur' },
+            { type: 'string', min: 6, message: 'The password is required with 6 character', trigger: 'blur' }
           ]
         }
       };
@@ -52,9 +52,12 @@
               if (this.$store.getters.isLoggedIn) {
                 this.$router.push('/');
               } else {
-                this.$refs[name].resetFields();
+                this.formInline.password = '';
                 this.$refs[name].validate();
-                this.$Message.error('Login fails');
+                this.$Message.error({
+                  content: 'Login fails',
+                  duration: 5
+                });
               }
             });
           }
@@ -68,8 +71,6 @@
 .content-card {
   width: 300px;
   height: 230px;
-  background-color: #eee;
-
   position: absolute;
   top:0;
   bottom: 0;
