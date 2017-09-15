@@ -8,7 +8,6 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'app',
       component: require('@/components/App'),
       children: [
         {
@@ -16,11 +15,6 @@ const router = new Router({
           name: 'index',
           component: require('@/components/DashPlayer')
         },
-        {
-          path: '/test',
-          name: 'test',
-          component: require('@/components/TestPlayer')
-        }
       ],
       beforeEnter: (to, from, next) => {
         if (!store.getters.isLoggedIn) {

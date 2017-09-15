@@ -14,18 +14,6 @@
                             </router-link>
                         </span>
                     </Menu-item>
-                    <Menu-item name="2">
-                        <Icon type="arrow-right-b"></Icon>
-                        <span class="layout-text">
-                            <router-link :to="{name: 'test'}">
-                                Test
-                            </router-link>
-                        </span>
-                    </Menu-item>
-                    <Menu-item name="3">
-                        <Icon type="arrow-right-b"></Icon>
-                        <span class="layout-text">Stats</span>
-                    </Menu-item>
                     <Menu-item name="3" v-if="isLoggedIn">
                         <Icon type="arrow-right-b"></Icon>
                         <span class="layout-text" v-on:click="logout">Logout</span>
