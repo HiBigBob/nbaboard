@@ -15,7 +15,7 @@ export const sortOrder = ({ commit }, sort) => {
 
 export const login = ({ commit }, creds) => {
   commit(types.LOGIN);
-  return Vue.http.post('http://localhost:8000/login', creds).then((response) => {
+  return Vue.http.post('/login', creds).then((response) => {
     localStorage.setItem('token', response.data.token);
     commit(types.LOGIN_SUCCESS);
   }).catch(() => {

@@ -1,9 +1,8 @@
-import axios from 'axios';
+import Vue from 'vue';
 
 export default {
   getDashPlayer(cb) {
-    const URL = 'http://localhost:9081/leaguedashplayerstats';
-    axios.get(URL).then((response) => {
+    Vue.http.get('/player').then((response) => {
       cb(response.data);
     })
     .catch(() => {

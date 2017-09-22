@@ -11,7 +11,8 @@ const debug = process.env.NODE_ENV !== 'production';
 
 export default new Vuex.Store({
   state: {
-    isLoggedIn: !!localStorage.getItem('token')
+    isLoggedIn: !!localStorage.getItem('token'),
+    token: localStorage.getItem('token')
   },
   actions,
   getters,
