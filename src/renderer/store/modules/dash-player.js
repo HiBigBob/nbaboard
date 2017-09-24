@@ -51,7 +51,7 @@ const state = {
 const getters = {
   allDashPlayer: state => state.all,
   dashPlayer: state => state.current,
-  dashPlayerLength: state => state.all.length,
+  dashPlayerLength: state => state.all.values.length,
   currentPage: state => state.page,
   sort: state => state.sort,
 };
@@ -74,11 +74,13 @@ const mutations = {
   },
 
   [types.CHANGE_PAGE_DASH_PLAYER](state, { currentPage }) {
+    console.log(currentPage);
     state.page = currentPage;
     state.current = transformCurrent(state);
   },
 
   [types.SORT_ORDER_DASH_PLAYER](state, { sort }) {
+    console.log(sort);
     state.sort = sort;
     state.current = transformCurrent(state);
   }
