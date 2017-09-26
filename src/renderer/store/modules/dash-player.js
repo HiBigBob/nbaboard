@@ -17,8 +17,28 @@ const sortByType = (a, b, order) => {
   return 0;
 };
 
+const transformSameLevel = (players) => {
+  const values = JSON.parse(JSON.stringify(players.values));
+  values.map((value) => {
+    return Object.keys(value).map((current) => {
+      if (typeof value[current] === 'object') {
+        value[current] = value[current].name;
+      } else {
+        value[current] = value[current];
+      }
+
+      return value[current];
+    });
+  });
+
+  return {
+    headers: players.headers,
+    values
+  };
+};
+
 const transformCurrent = (state) => {
-  let values = state.all.values.slice();
+  let values = state.all.values;
   if (state.sort !== null) {
     values = values.sort((a, b) => {
       const order = state.sort.order === 'desc' ? -1 : 1;
@@ -59,7 +79,7 @@ const getters = {
 // actions
 const actions = {
   getAllDashPlayer({ commit }) {
-    stats.getDashPlayer((players) => {
+    stats.getDashPlayer().then((players) => {
       commit(types.RECEIVE_DASH_PLAYER, { players });
     });
   },
@@ -68,19 +88,16 @@ const actions = {
 // mutations
 const mutations = {
   [types.RECEIVE_DASH_PLAYER](state, { players }) {
-    console.log(players);
-    state.all = players;
+    state.all = transformSameLevel(players);
     state.current = transformCurrent(state);
   },
 
   [types.CHANGE_PAGE_DASH_PLAYER](state, { currentPage }) {
-    console.log(currentPage);
     state.page = currentPage;
     state.current = transformCurrent(state);
   },
 
   [types.SORT_ORDER_DASH_PLAYER](state, { sort }) {
-    console.log(sort);
     state.sort = sort;
     state.current = transformCurrent(state);
   }
