@@ -82,6 +82,7 @@ const transformCurrent = (state) => {
 
 // initial state
 const state = {
+  filters: {},
   all: {
     headers: [],
     values: [],
@@ -98,6 +99,7 @@ const state = {
 const getters = {
   allDashPlayer: state => state.all,
   dashPlayer: state => state.current,
+  filters: state => state.filters,
   dashPlayerLength: state => state.all.values.length,
   currentPage: state => state.page,
   sort: state => state.sort,
@@ -110,6 +112,12 @@ const actions = {
       commit(types.RECEIVE_DASH_PLAYER, { players });
     });
   },
+  getFilters({ commit }) {
+    stats.getFilters().then((filters) => {
+      console.log('filters', filters);
+      commit(types.RECEIVE_FILTERS, { filters });
+    });
+  },
 };
 
 // mutations
@@ -118,6 +126,10 @@ const mutations = {
     state.all = transformSameLevel(players);
     state.current = transformCurrent(state);
     console.log('state ', state);
+  },
+
+  [types.RECEIVE_FILTERS](state, { filters }) {
+    state.filters = filters;
   },
 
   [types.CHANGE_PAGE_DASH_PLAYER](state, { currentPage }) {

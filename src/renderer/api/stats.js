@@ -15,4 +15,19 @@ export default {
       });
     });
   },
+
+  getFilters() {
+    return new Promise((resolve, reject) => {
+      Vue.http.get('/player/filter', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        }
+      }).then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+    });
+  },
 };

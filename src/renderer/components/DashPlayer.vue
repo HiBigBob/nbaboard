@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div style="margin: 10px;">
+      <Select v-model="filtersPosition" style="width:200px">
+        <Option v-for="position in filters.position" :value="position.name" :key="position.name">{{ position.name }}</Option>
+      </Select>
+    </div>
     <Table size="small" border no-data-text="Loading" :columns="players.headers" :data="players.values" @on-sort-change="sortOrder"> </Table>
     <div style="margin: 10px;overflow: hidden">
       <div style="float: right;">
@@ -16,7 +21,13 @@
   } from 'vuex';
 
   export default {
+    data() {
+      return {
+        filtersPosition: '',
+      };
+    },
     computed: mapGetters({
+      filters: 'filters',
       players: 'dashPlayer',
       playersLength: 'dashPlayerLength',
       currentPage: 'currentPage',
@@ -28,6 +39,7 @@
     ]),
     created() {
       this.$store.dispatch('getAllDashPlayer');
+      this.$store.dispatch('getFilters');
     },
   };
 </script>
