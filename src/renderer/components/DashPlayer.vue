@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Table size="small" border no-data-text="Loading" :columns="players.headers" :data ="players.values" @on-sort-change="sortOrder"> </Table>
+    <Table size="small" border no-data-text="Loading" :columns="players.headers" :data="players.values" @on-sort-change="sortOrder"> </Table>
     <div style="margin: 10px;overflow: hidden">
       <div style="float: right;">
         <Page :total="playersLength" :current="currentPage" @on-change="changePage"></Page>

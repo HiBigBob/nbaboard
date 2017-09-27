@@ -37,6 +37,33 @@ const transformSameLevel = (players) => {
   };
 };
 
+const transformHeader = (all) => {
+  const filterDraftYear = all.values.map((value) => {
+    return {
+      label: value.draft_year,
+      value: value.draft_year,
+    };
+  }).filter((item, pos, arr) => {
+    return arr.findIndex((elem) => {
+      return elem.value === item.value;
+    }) === pos;
+  });
+  console.log('draft ', filterDraftYear);
+
+  const tmp = all.headers.map((header) => {
+    if (header.key === 'draft_year') {
+      header.filterMultiple = false;
+      header.filters = filterDraftYear;
+      header.filterMethod = (value, row) => {
+        return row.draft_year.indexOf(value) > -1;
+      };
+    }
+    return header;
+  });
+
+  return tmp;
+};
+
 const transformCurrent = (state) => {
   let values = state.all.values;
   if (state.sort !== null) {
@@ -48,7 +75,7 @@ const transformCurrent = (state) => {
   const begin = (state.page - 1) * 10;
   const end = begin + 10;
   return {
-    headers: state.all.headers,
+    headers: transformHeader(state.all),
     values: values.slice(begin, end),
   };
 };
@@ -90,6 +117,7 @@ const mutations = {
   [types.RECEIVE_DASH_PLAYER](state, { players }) {
     state.all = transformSameLevel(players);
     state.current = transformCurrent(state);
+    console.log('state ', state);
   },
 
   [types.CHANGE_PAGE_DASH_PLAYER](state, { currentPage }) {
