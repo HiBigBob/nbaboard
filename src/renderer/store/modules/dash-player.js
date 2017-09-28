@@ -38,25 +38,9 @@ const transformSameLevel = (players) => {
 };
 
 const transformHeader = (all) => {
-  const filterDraftYear = all.values.map((value) => {
-    return {
-      label: value.draft_year,
-      value: value.draft_year,
-    };
-  }).filter((item, pos, arr) => {
-    return arr.findIndex((elem) => {
-      return elem.value === item.value;
-    }) === pos;
-  });
-  console.log('draft ', filterDraftYear);
-
   const tmp = all.headers.map((header) => {
-    if (header.key === 'draft_year') {
-      header.filterMultiple = false;
-      header.filters = filterDraftYear;
-      header.filterMethod = (value, row) => {
-        return row.draft_year.indexOf(value) > -1;
-      };
+    if (header.key === 'first_name' || header.key === 'last_name') {
+      header.fixed = 'left';
     }
     return header;
   });
@@ -116,6 +100,16 @@ const actions = {
     stats.getFilters().then((filters) => {
       console.log('filters', filters);
       commit(types.RECEIVE_FILTERS, { filters });
+    });
+  },
+  changePage({ commit }, page) {
+    commit(types.CHANGE_PAGE_DASH_PLAYER, {
+      currentPage: page
+    });
+  },
+  sortOrder({ commit }, sort) {
+    commit(types.SORT_ORDER_DASH_PLAYER, {
+      sort,
     });
   },
 };

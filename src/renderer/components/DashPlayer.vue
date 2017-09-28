@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div style="margin: 10px;">
-      <Select v-model="filtersPosition" style="width:200px">
+    <div style="margin-bottom: 10px;">
+      <Select v-model="filtersPosition" placeholder="Poste" style="width:200px" filterable>
         <Option v-for="position in filters.position" :value="position.name" :key="position.name">{{ position.name }}</Option>
       </Select>
     </div>
