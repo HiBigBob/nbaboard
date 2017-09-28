@@ -21,14 +21,12 @@
                 </Menu>
             </i-col>
             <i-col :span="spanRight">
-                <div class="layout-header">
-                    <i-button type="text" @click="toggleClick">
-                        <Icon type="navicon" size="32"></Icon>
-                    </i-button>
-                </div>
                 <div class="layout-breadcrumb">
                     <Breadcrumb>
-                        <Breadcrumb-item href="#">Accueil</Breadcrumb-item>
+                      <i-button type="text" @click="toggleClick">
+                        <Icon type="navicon" size="32"></Icon>
+                      </i-button>
+                      <Breadcrumb-item href="#">Accueil</Breadcrumb-item>
                         <Breadcrumb-item>Stats</Breadcrumb-item>
                     </Breadcrumb>
                 </div>
@@ -100,7 +98,7 @@
     }
     .layout-content-main{
         padding: 10px;
-        height: 540px;
+        height: 590px;
     }
     .layout-copy{
         text-align: center;
