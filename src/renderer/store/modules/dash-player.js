@@ -17,6 +17,21 @@ const sortByType = (a, b, order) => {
   return 0;
 };
 
+const transformFilters = (filters) => {
+  const value = JSON.parse(JSON.stringify(filters));
+  Object.keys(value).map((current) => {
+    value[current] = {
+      items: value[current],
+      results: [],
+      query: ''
+    };
+
+    return value[current];
+  });
+
+  return value;
+};
+
 const transformSameLevel = (players) => {
   const values = JSON.parse(JSON.stringify(players.values));
   values.map((value) => {
@@ -112,6 +127,11 @@ const actions = {
       sort,
     });
   },
+  filterAction({ commit }, params) {
+    commit(types.RECEIVE_FILTERS_QUERY, {
+      params
+    });
+  },
 };
 
 // mutations
@@ -123,7 +143,7 @@ const mutations = {
   },
 
   [types.RECEIVE_FILTERS](state, { filters }) {
-    state.filters = filters;
+    state.filters = transformFilters(filters);
   },
 
   [types.CHANGE_PAGE_DASH_PLAYER](state, { currentPage }) {
@@ -134,6 +154,17 @@ const mutations = {
   [types.SORT_ORDER_DASH_PLAYER](state, { sort }) {
     state.sort = sort;
     state.current = transformCurrent(state);
+  },
+
+  [types.RECEIVE_FILTERS_QUERY](state, { params }) {
+    let results = [];
+    if (params.query && params.query.length > 0) {
+      results = state.filters[params.key].items.filter((item) => {
+        return item.name.toLowerCase().indexOf(params.query.toLowerCase()) > -1;
+      });
+    }
+    state.filters[params.key].query = params.query;
+    state.filters[params.key].results = results;
   }
 };
 

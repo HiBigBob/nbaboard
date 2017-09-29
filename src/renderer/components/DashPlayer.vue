@@ -1,8 +1,8 @@
 <template>
   <div>
     <div style="margin-bottom: 10px;">
-      <Select v-model="filtersPosition" placeholder="Poste" style="width:200px" filterable>
-        <Option v-for="position in filters.position" :value="position.name" :key="position.name">{{ position.name }}</Option>
+      <Select v-if="filters.position && filters.position.results" v-model="filterPositionSelect" placeholder="Poste" style="width:200px" filterable multiple not-found-text="Loading" remote :remote-method="filterPosition" @on-change="filterPositionChange">
+        <Option v-for="position in filters.position.results" :value="position.name" :key="position.name">{{ position.name }}</Option>
       </Select>
     </div>
     <Table size="small" border no-data-text="Loading" :columns="players.headers" :data="players.values" @on-sort-change="sortOrder"> </Table>
@@ -23,7 +23,7 @@
   export default {
     data() {
       return {
-        filtersPosition: '',
+        filterPositionSelect: [],
       };
     },
     computed: mapGetters({
@@ -33,10 +33,19 @@
       currentPage: 'currentPage',
       sort: 'sort',
     }),
-    methods: mapActions([
-      'changePage',
-      'sortOrder',
-    ]),
+    methods: {
+      ...mapActions([
+        'changePage',
+        'sortOrder',
+        'filterAction',
+      ]),
+      filterPosition(query) {
+        this.$store.dispatch('filterAction', { key: 'position', query });
+      },
+      filterPositionChange(query) {
+        console.log('change', query);
+      }
+    },
     created() {
       this.$store.dispatch('getAllDashPlayer');
       this.$store.dispatch('getFilters');
