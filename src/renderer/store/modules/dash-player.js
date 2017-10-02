@@ -23,6 +23,7 @@ const transformFilters = (filters) => {
     value[current] = {
       items: value[current],
       results: [],
+      selected: [],
       query: ''
     };
 
@@ -132,6 +133,11 @@ const actions = {
       params
     });
   },
+  filterChange({ commit }, params) {
+    commit(types.RECEIVE_FILTERS_CHANGE, {
+      params
+    });
+  },
 };
 
 // mutations
@@ -165,6 +171,21 @@ const mutations = {
     }
     state.filters[params.key].query = params.query;
     state.filters[params.key].results = results;
+  },
+
+  [types.RECEIVE_FILTERS_CHANGE](state, { params }) {
+    state.filters[params.key].selected = params.selected;
+    state.all = state.all;
+    let values = state.all.values;
+    if (state.filters[params.key].selected.length) {
+      values = state.all.values.filter((item) => {
+        const element = item[params.key].toLowerCase();
+        return element.indexOf(state.filters[params.key].selected[0].toLowerCase()) > -1;
+      });
+    }
+    state.all.values = values;
+    state.current = transformCurrent(state);
+    console.log('state change ', state);
   }
 };
 
