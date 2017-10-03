@@ -93,6 +93,7 @@ const state = {
   },
   page: 1,
   sort: null,
+  select: [],
 };
 
 // getters
@@ -143,6 +144,7 @@ const actions = {
 // mutations
 const mutations = {
   [types.RECEIVE_DASH_PLAYER](state, { players }) {
+    state.origin = transformSameLevel(players);
     state.all = transformSameLevel(players);
     state.current = transformCurrent(state);
     console.log('state ', state);
@@ -175,8 +177,7 @@ const mutations = {
 
   [types.RECEIVE_FILTERS_CHANGE](state, { params }) {
     state.filters[params.key].selected = params.selected;
-    state.all = state.all;
-    let values = state.all.values;
+    let values = state.origin.values;
     if (state.filters[params.key].selected.length) {
       values = state.all.values.filter((item) => {
         const element = item[params.key].toLowerCase();

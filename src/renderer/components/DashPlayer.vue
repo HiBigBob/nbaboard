@@ -1,7 +1,18 @@
 <template>
   <div>
     <div style="margin-bottom: 10px;">
-      <Select v-if="filters.position && filters.position.results" :value="filterPositionSelect" placeholder="Poste" style="width:200px" clearable filterable multiple not-found-text="Loading" remote :remote-method="filterPosition" @on-change="filterPositionChange">
+      <Select 
+        v-if="filters.position && filters.position.results" 
+        :value="filterPositionSelect" 
+        placeholder="Poste" 
+        style="width:200px" 
+        clearable 
+        filterable 
+        multiple 
+        not-found-text="Loading" 
+        remote 
+        :remote-method="filterPosition" 
+        @on-change="filterPositionChange">
         <Option v-for="position in filters.position.results" :value="position.name" :key="position.name">{{ position.name }}</Option>
       </Select>
     </div>
@@ -46,7 +57,7 @@
       filterPositionChange(query) {
         const selected = query.length > 0 ? query : [];
         this.$store.dispatch('filterChange', { key: 'position', selected });
-      }
+      },
     },
     created() {
       this.$store.dispatch('getAllDashPlayer');
