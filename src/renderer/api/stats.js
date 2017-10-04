@@ -11,7 +11,7 @@ export default {
         resolve(response.data);
       })
       .catch((error) => {
-        if (error.response && error.response.status === '401') {
+        if (error.response && error.response.status === 401) {
           localStorage.removeItem('token');
         }
         reject(error);
@@ -29,6 +29,9 @@ export default {
         resolve(response.data);
       })
       .catch((error) => {
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+        }
         reject(error);
       });
     });
