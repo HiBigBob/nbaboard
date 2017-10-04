@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import stats from '../../api/stats';
 import * as types from '../mutation-types';
 
@@ -64,8 +66,31 @@ const transformHeader = (all) => {
   return tmp;
 };
 
+const transformWithFilters = (values, filters) => {
+  const tmpArray = [];
+  const hasFilters = Object.keys(filters)
+      .filter(key => filters[key].selected.length);
+
+  if (hasFilters.length) {
+    values.forEach((value) => {
+      hasFilters.forEach((key) => {
+        const selected = _.concat(filters[key].selected);
+        const element = value[key].toLowerCase();
+        if (selected.findIndex((item) => {
+          return element === item.toLowerCase();
+        }) > -1) {
+          tmpArray.push(value);
+        }
+      });
+    });
+  }
+
+  return tmpArray.length ? tmpArray : values;
+};
+
 const transformCurrent = (state) => {
-  let values = state.all.values;
+  let values = _.cloneDeep(state.all.values);
+  values = transformWithFilters(values, state.filters);
   if (state.sort !== null) {
     values = values.sort((a, b) => {
       const order = state.sort.order === 'desc' ? -1 : 1;
@@ -77,6 +102,7 @@ const transformCurrent = (state) => {
   return {
     headers: transformHeader(state.all),
     values: values.slice(begin, end),
+    count: values.length,
   };
 };
 
@@ -93,7 +119,6 @@ const state = {
   },
   page: 1,
   sort: null,
-  select: [],
 };
 
 // getters
@@ -101,7 +126,7 @@ const getters = {
   allDashPlayer: state => state.all,
   dashPlayer: state => state.current,
   filters: state => state.filters,
-  dashPlayerLength: state => state.all.values.length,
+  dashPlayerLength: state => state.current.count,
   currentPage: state => state.page,
   sort: state => state.sort,
 };
@@ -177,16 +202,7 @@ const mutations = {
 
   [types.RECEIVE_FILTERS_CHANGE](state, { params }) {
     state.filters[params.key].selected = params.selected;
-    let values = state.origin.values;
-    if (state.filters[params.key].selected.length) {
-      values = state.all.values.filter((item) => {
-        const element = item[params.key].toLowerCase();
-        return element.indexOf(state.filters[params.key].selected[0].toLowerCase()) > -1;
-      });
-    }
-    state.all.values = values;
     state.current = transformCurrent(state);
-    console.log('state change ', state);
   }
 };
 
